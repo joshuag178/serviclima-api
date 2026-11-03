@@ -1,0 +1,12 @@
+# Dependencias instaladas con npm
+node_modules/
+
+# Variables de entorno (se agregan en la sesión 3)
+.env
+
+# Base de datos SQLite (se agrega en la sesión 5)
+*.db
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
