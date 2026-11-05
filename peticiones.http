@@ -1,0 +1,21 @@
+# peticiones.http
+# Peticiones de prueba de serviclima-api.
+# Con la extensión REST Client: clic en "Send Request" encima de cada petición. 
+# Este archivo crece cada sesión y es parte del entregable final.
+
+@base = http://localhost:3001 
+
+### Listado de órdenes
+GET {{base}}/ordenes
+
+### Detalle de una orden 
+GET {{base}}/ordenes/8
+
+### Órdenes pendientes
+GET {{base}}/ordenes?estado=pendiente
+
+### Orden que no existe (404)
+GET {{base}}/ordenes/999
+
+### Id que no es número (404) 
+GET {{base}}/ordenes/abc

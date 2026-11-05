@@ -1,13 +1,17 @@
 {
   "name": "serviclima-api",
   "version": "1.0.0",
-  "description": "API REST de Serviclima con Node.js y Express",
-  "main": "src/index.js",
+  "description": "API de Serviclima con Node.js y Express",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "dev": "node --watch index.js",
+    "start": "node index.js"
   },
-  "engines": {
-    "node": ">=26"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
   }
 }
