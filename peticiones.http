@@ -19,3 +19,55 @@ GET {{base}}/ordenes/999
 
 ### Id que no es número (404) 
 GET {{base}}/ordenes/abc
+
+### Crear una orden (201, el servidor asigna id y codigo)
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+    "cliente": "Ferretería El Progreso",
+    "nit": "4567891-2",
+    "departamento": "Chimaltenango",
+    "categoria": "Instalación",
+    "tecnico": "Mario Ixcot",
+    "fecha": "2026-11-09",
+    "horas": 4,
+    "monto": 2400,
+    "estado": "pendiente"
+}
+
+### Cambiar solo el estado (PATCH combina)
+PATCH {{base}}/ordenes/25
+Content-Type: application/json
+
+{
+    "estado": "en proceso"
+}
+
+### Reemplazar la orden completa (PUT reemplaza)
+PUT {{base}}/ordenes/25
+Content-Type: application/json
+
+{
+    "cliente": "Ferretería El Progreso",
+    "nit": "4567891-2",
+    "departamento": "Chimaltenango",
+    "categoria": "Reparación",
+    "tecnico": "Lucía Morales",
+    "fecha": "2026-11-10",
+    "horas": 5,
+    "monto": 3000,
+    "estado": "en proceso"
+}
+
+### Eliminar (200 con {})
+DELETE {{base}}/ordenes/25
+
+### Eliminar otra vez la misma (404)
+DELETE {{base}}/ordenes/25
+
+### Preflight del navegador (204 con los headers de CORS)
+OPTIONS {{base}}/ordenes
+Origin: http://localhost:5173
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
