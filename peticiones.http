@@ -71,3 +71,124 @@ OPTIONS {{base}}/ordenes
 Origin: http://localhost:5173
 Access-Control-Request-Method: POST
 Access-Control-Request-Headers: content-type
+
+### La API acepta cualquier cosa (hoy responde 201)
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "",
+  "departamento": "Marte",
+  "horas": "muchas",
+  "monto": -500,
+  "estado": "inventado"
+}
+
+
+# ---------------------------------------------------------------
+# Sesión 4: catálogos, validación y errores
+# Todas las respuestas de error tienen la forma { "error": "...", "detalles": [...] }
+# ---------------------------------------------------------------
+
+### Catálogo de departamentos (200)
+GET {{base}}/departamentos
+
+### Catálogo de categorías (200)
+GET {{base}}/categorias
+
+### Ruta que no existe (404 desde noEncontrado)
+GET {{base}}/clientes
+
+### Crear con datos inválidos (400 con un detalle por campo)
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "",
+  "nit": "1234567-X",
+  "departamento": "Petén",
+  "categoria": "Limpieza",
+  "tecnico": "Mario Ixcot",
+  "fecha": "11/11/2026",
+  "horas": 30,
+  "monto": -500,
+  "estado": "inventado"
+}
+
+### Crear sin cuerpo (400: faltan todos los campos)
+POST {{base}}/ordenes
+
+### Números enviados como texto (400 en horas y monto)
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "Ferretería El Progreso",
+  "nit": "4567891-2",
+  "departamento": "Chimaltenango",
+  "categoria": "Instalación",
+  "tecnico": "Mario Ixcot",
+  "fecha": "2026-11-11",
+  "horas": "4",
+  "monto": "2400",
+  "estado": "pendiente"
+}
+
+### Campos extra: se ignoran (201; id y codigo los pone el servidor, sin "descuento")
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "id": 999,
+  "codigo": "OS-2026-999",
+  "cliente": "Consumidor Final",
+  "nit": "CF",
+  "departamento": "Guatemala",
+  "categoria": "Diagnóstico",
+  "tecnico": "Ana Chacón",
+  "fecha": "2026-11-11",
+  "horas": 1.5,
+  "monto": 450,
+  "descuento": 100,
+  "estado": "pendiente"
+}
+
+### PATCH con un estado que no existe (400)
+PATCH {{base}}/ordenes/1
+Content-Type: application/json
+
+{
+  "estado": "terminada"
+}
+
+### PATCH con solo codigo, como el que hace el frontend al crear (200 sin cambios)
+PATCH {{base}}/ordenes/1
+Content-Type: application/json
+
+{
+  "codigo": "OS-2026-001"
+}
+
+### PUT incompleto (400: PUT exige la orden completa)
+PUT {{base}}/ordenes/1
+Content-Type: application/json
+
+{
+  "estado": "completada"
+}
+
+### PATCH a una orden que no existe (404 desde el controlador)
+PATCH {{base}}/ordenes/999
+Content-Type: application/json
+
+{
+  "estado": "cancelada"
+}
+
+### JSON mal escrito: falta la comilla de cierre (400)
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "Ferretería El Progreso
+}
