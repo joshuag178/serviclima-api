@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --env-file=.env index.js",
-    "start": "node --env-file=.env index.js"
+    "start": "node --env-file=.env index.js",
+    "reiniciar-db": "node reiniciar-db.js"
   },
   "keywords": [],
   "author": "",

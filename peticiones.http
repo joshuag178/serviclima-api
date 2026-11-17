@@ -192,3 +192,48 @@ Content-Type: application/json
 {
   "cliente": "Ferretería El Progreso
 }
+
+
+# ------------------------------------------------------------
+# Sesión 5: SQLite, filtros y resumen
+# ------------------------------------------------------------
+
+### Persistencia: cree esta orden, reinicie el servidor y vuelva a pedir el listado
+POST {{base}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "Panadería San Martín",
+  "nit": "8899001-K",
+  "departamento": "Sacatepéquez",
+  "categoria": "Reparación",
+  "tecnico": "Byron Tzul",
+  "fecha": "2026-11-16",
+  "horas": 2.5,
+  "monto": 900,
+  "estado": "pendiente"
+}
+
+### Filtro por estado
+GET {{base}}/ordenes?estado=pendiente
+
+### Filtro por técnico (el espacio se escribe %20)
+GET {{base}}/ordenes?tecnico=Mario%20Ixcot
+
+### Filtro por departamento
+GET {{base}}/ordenes?departamento=Guatemala
+
+### Dos filtros a la vez (AND)
+GET {{base}}/ordenes?estado=completada&tecnico=Ana%20Chac%C3%B3n
+
+### Filtro sin coincidencias (200 con [])
+GET {{base}}/ordenes?estado=archivada
+
+### Filtro desconocido: se ignora (200 con todas)
+GET {{base}}/ordenes?color=rojo
+
+### Intento de inyección en un filtro (200 con []: el valor viaja en ?)
+GET {{base}}/ordenes?estado=x'%20OR%20'1'='1
+
+### Resumen: totales por estado y por técnico
+GET {{base}}/resumen

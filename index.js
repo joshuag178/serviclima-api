@@ -7,6 +7,7 @@
 import express from 'express';
 import rutasOrdenes from './src/rutas/ordenes.js';
 import rutasCatalogos from './src/rutas/catalogos.js';
+import rutasResumen from './src/rutas/resumen.js';
 import { registrarPeticion } from './src/middlewares/registrar-peticion.js';
 import { permitirOrigen } from './src/middlewares/permitir-origen.js';
 import { noEncontrado } from './src/middlewares/no-encontrado.js';
@@ -23,6 +24,7 @@ app.use(express.json());    // 3. cuerpo JSON en req.body
 // Rutas
 app.use('/ordenes', rutasOrdenes);
 app.use(rutasCatalogos); // /departamentos y /categorias
+app.use(rutasResumen);   // /resumen
 
 // Middlewares después de las rutas
 app.use(noEncontrado);   // 4. ninguna ruta atendió: 404
