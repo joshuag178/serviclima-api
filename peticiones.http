@@ -237,3 +237,42 @@ GET {{base}}/ordenes?estado=x'%20OR%20'1'='1
 
 ### Resumen: totales por estado y por técnico
 GET {{base}}/resumen
+
+
+# ------------------------------------------------------------
+# Sesión 6: seguridad y producción
+# ------------------------------------------------------------
+
+# Cambie esta dirección por la de su servicio en Render (sin / al final)
+@produccion = https://serviclima-api-xxxx.onrender.com
+
+### Headers de seguridad: revise la respuesta (helmet, CORS y RateLimit)
+GET {{base}}/departamentos
+
+### Preflight desde el frontend permitido (204 con Access-Control-Allow-Origin)
+OPTIONS {{base}}/ordenes
+Origin: http://localhost:5173
+Access-Control-Request-Method: POST
+
+### Producción: listado (la primera petición puede tardar si el servicio estaba dormido)
+GET {{produccion}}/ordenes
+
+### Producción: resumen
+GET {{produccion}}/resumen
+
+### Producción: crear una orden
+POST {{produccion}}/ordenes
+Content-Type: application/json
+
+{
+  "cliente": "Ferretería El Progreso",
+  "nit": "4455667-8",
+  "departamento": "Guatemala",
+  "categoria": "Mantenimiento preventivo",
+  "tecnico": "Ana Chacón",
+  "fecha": "2026-11-18",
+  "horas": 2,
+  "monto": 650,
+  "estado": "pendiente"
+}
+
