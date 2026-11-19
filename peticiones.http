@@ -244,7 +244,7 @@ GET {{base}}/resumen
 # ------------------------------------------------------------
 
 # Cambie esta dirección por la de su servicio en Render (sin / al final)
-@produccion = https://serviclima-api-xxxx.onrender.com
+@produccion = https://serviclima-api-lbuf.onrender.com
 
 ### Headers de seguridad: revise la respuesta (helmet, CORS y RateLimit)
 GET {{base}}/departamentos
